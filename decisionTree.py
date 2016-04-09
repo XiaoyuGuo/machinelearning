@@ -58,14 +58,15 @@ def chooseBestFeatureToSplit(dataSet):
         #分离出子集并计算子集的信息熵
         for value in uniqueVals:
             subDataSet = splitDataSet(dataSet, i, value)
+            prob = len(subDataSet)/len(dataSet)
             newEntropy += prob * calcShannonEnt(subDataSet)
         #计算信息增益，找到信息增益最大的分离方式
         infoGain = baseEntropy - newEntropy
         if (infoGain > bestInfoGain):
             bestInfoGain = infoGain
             bestFeature = i
-     #返回划分时信息增益最大的特征分量的下标
-     return bestFeature
+    #返回划分时信息增益最大的特征分量的下标
+    return bestFeature
      
 def majorityCnt(classList):
     classCount = {}
@@ -77,8 +78,35 @@ def majorityCnt(classList):
     return sortedClassCount[0][0]
 
 def createTree(dataSet, labels):
-    #类别列表
+    #获取当前数据集的所有类别
     classList = [example[-1] for example in dataSet]
-    if
-dataSet, labels = createDataSet()
 
+    #如果都是一个类别，则停止划分
+    if classList.count(classList[0]) == len(classList):
+        return classList[0]
+    if len(dataSet[0]) == 1: #如果没数据了
+        return majorityCnt(classList) #返回出现次数最多的类别
+    
+    #找到最优分隔特征和其对应的属性名称
+    bestFeat = chooseBestFeatureToSplit(dataSet)
+    bestFeatLabel = labels[bestFeat]
+
+    #创建一个根节点
+    myTree = {bestFeatLabel:{}}
+    
+    #删除标签中的该节点
+    del(labels[bestFeat])
+    
+    #对于该特征，获取所有样本该特征的值，并得到其所有不同的值
+    featValues = [example[bestFeat] for example in dataSet]
+    uniqueVals = set(featValues)
+    
+    #对于该特征每一个不同的值
+    for value in uniqueVals:
+        subLabels = labels[:]
+        #通过删除该特征值的向量组dataSet，递归求该值下的子树
+        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
+    return myTree    
+    
+dataSet, labels = createDataSet()
+print(createTree(dataSet, labels))

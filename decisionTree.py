@@ -107,6 +107,4 @@ def createTree(dataSet, labels):
         #通过删除该特征值的向量组dataSet，递归求该值下的子树
         myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
     return myTree    
-    
-dataSet, labels = createDataSet()
-print(createTree(dataSet, labels))
+

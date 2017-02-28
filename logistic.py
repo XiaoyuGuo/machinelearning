@@ -1,33 +1,38 @@
 from numpy import *
-import random
-
-
+import matplotlib.pyplot as plt  
+import time  
+  
 def sigmoid(inX):
-    return 1/(1+exp(-inX))
+    '''Sigmoid method'''
+    return 1.0/(1+exp(-inX))
 
 def gradAscent(dataMatIn, classLabels):
+    '''Use gradient ascent function'''
     dataMatrix = mat(dataMatIn)
     labelMat = mat(classLabels).transpose()
-    m,n = shape(dataMatrix)
-    alpha = 0.001
+
+    m, n = shape(dataMatrix)
+    alpha = 0.01
     maxCycles = 500
-    weight = ones((n,1))
+    weights = ones((n, 1))
+
     for k in range(maxCycles):
-        h = sigmoid(dataMatrix * weight)
+        h = sigmoid(dataMatrix * weights)
         error = (labelMat - h)
         weights = weights + alpha * dataMatrix.transpose() * error
+
     return weights
 
-dataSet = []
-labels = []
-k = 2
-for i in range(100):
-    dataSet.append([1.0, random.uniform(15,20),random.uniform(15,20)])
-    labels.append(1)
+def init():
+    dataMat = []; labelMat = []
+    for i in range(1000):
+        dataMat.append([1.0, float(random.uniform(0,5)), float(random.uniform(0,5))])
+        labelMat.append(1)
+    for i in range(1000):
+        dataMat.append([1.0, float(random.uniform(15,20)), float(random.uniform(15,25))])
+        labelMat.append(0)
 
-for i in range(100):
-    dataSet.append([1.0, random.uniform(5,10),random.uniform(5,10)])
-    labels.append(2)
+    weights = gradAscent(dataMat, labelMat)
+    print(sigmoid(mat([1.0, 3, 3]) * weights))
 
-
-print(dataSet)
+init()

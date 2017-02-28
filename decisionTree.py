@@ -16,6 +16,7 @@ def createDataSet():
 # ID3中，主要采用InformationGain对属性进行衡量
 # C4.5中，主要采用InformationGainRatio对属性进行衡量
 # 否则，属性选择则会倾向于类别较多的结点
+# CART的特点是假设决策树是二叉树，对分类树使用GINI指数作为最小化准则，对回归树使用平方误差最小化
 def calcShannonEnt(dataSet):
     numEntries = len(dataSet)
     labelCounts = {}
@@ -110,5 +111,8 @@ def createTree(dataSet, labels):
         subLabels = labels[:]
         #通过删除该特征值的向量组dataSet，递归求该值下的子树
         myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
-    return myTree    
+    return myTree
+
+# 关于剪枝，主要考虑到模型复杂度
+# 去过剪枝后子树损失更小，则采用子树
 

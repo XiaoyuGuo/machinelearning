@@ -12,6 +12,10 @@ def createDataSet():
     labels = ["no surfacing", "flippers"]
     return dataSet, labels
 
+
+# ID3中，主要采用InformationGain对属性进行衡量
+# C4.5中，主要采用InformationGainRatio对属性进行衡量
+# 否则，属性选择则会倾向于类别较多的结点
 def calcShannonEnt(dataSet):
     numEntries = len(dataSet)
     labelCounts = {}

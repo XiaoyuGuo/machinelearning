@@ -25,3 +25,6 @@ def classify0(inX, dataSet, labels, k):
     
 group, labels = createDataSet()
 print(classify0([1,1], group, labels, 3))
+
+#可是kNN线性扫描时间复杂度太高辣！！！
+#所以应该构造kd树，详情见代码kd树

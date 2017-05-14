@@ -6,6 +6,7 @@ Error Back Propagation Algorithm
 
 import math
 import random
+from activation import ReLu
 
 class BPNetwork():
     '''BPNetwork'''
@@ -16,10 +17,6 @@ class BPNetwork():
     w = [0.1,0.1] # w1 w2
     γ = [0.1, 0.1] # γ1 γ2 Hidden Layer Threshold
     v = [0.1, 0.1, 0.1, 0.1] # v11, v21, v12, v22
-
-    def sigmoid(self, x):
-        '''Sigmoid Func'''
-        return 1 / (1 + math.exp(-x))
 
     def train(self, data):
         '''Train network'''
@@ -63,15 +60,15 @@ class BPNetwork():
     def calHide(self, x1, x2):
         '''Calc hidden layer'''
         # Calc output of hidden layer
-        b1 = self.sigmoid(x1 * self.v[0] + x2 * self.v[1] - self.γ[0])
-        b2 = self.sigmoid(x1 * self.v[2] + x2 * self.v[3] - self.γ[1])
+        b1 = ReLu(x1 * self.v[0] + x2 * self.v[1] - self.γ[0])
+        b2 = ReLu(x1 * self.v[2] + x2 * self.v[3] - self.γ[1])
         # Return output of hidden layer
         return b1, b2
     
     def calOut(self, b1, b2):
         '''Calc out layer'''
         # Return output of output layer
-        return self.sigmoid(b1 * self.w[0] + b2 * self.w[1] - self.θ[0])
+        return ReLu(b1 * self.w[0] + b2 * self.w[1] - self.θ[0])
 
     def init(self):
         '''Initialize this bpnetwork'''

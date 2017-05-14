@@ -46,8 +46,6 @@ def getTreeDepth(myTree):
 
 #两点之间的文本
 def plotMidText(cntrPt, parentPt, txtString):
-    print(cntrPt)
-    print(parentPt)
     xMid = (parentPt[0] + cntrPt[0])/2
     yMid = (parentPt[1] + cntrPt[1])/2
     createPlot.ax1.text(xMid, yMid, txtString)
@@ -77,8 +75,8 @@ def createPlot(inTree):
     createPlot.ax1 = plt.subplot(111, frameon=False, **axprops)
     plotTree.totalW = getNumLeafs(inTree)
     plotTree.totalD = getTreeDepth(inTree)
-    plotTree.xOff = -0.5/plotTree.totalW;
-    plotTree.yOff = 1;
+    plotTree.xOff = -0.5/plotTree.totalW
+    plotTree.yOff = 1
     plotTree(inTree, (0.5,1), "")
     plt.show()
 

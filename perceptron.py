@@ -1,7 +1,7 @@
 import random
 
-w = [random.uniform(-1, 1), random.uniform(-1, 1)]  # w1, w2
-b = random.uniform(-1, 1)  # sita 阈值
+w = [random.uniform(-1, 1), random.uniform(-1, 1)]
+b = random.uniform(-1, 1)
 rate = 0.001
 data = []
 for i in range(0, 1000000, 1):

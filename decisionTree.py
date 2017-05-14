@@ -9,7 +9,7 @@ def createDataSet():
         [0,1,"no"],
         [0,1,"no"]
         ]
-    labels = ["no surfacing", "flippers"]
+    labels = ["feature1", "feature2"]
     return dataSet, labels
 
 

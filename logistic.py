@@ -1,6 +1,5 @@
 from numpy import *
-import matplotlib.pyplot as plt  
-import time  
+import time
   
 def sigmoid(inX):
     '''Sigmoid method'''
@@ -16,11 +15,11 @@ def gradAscent(dataMatIn, classLabels):
     maxCycles = 500
     weights = ones((n, 1))
 
+    print(dataMatrix * weights)
     for k in range(maxCycles):
         h = sigmoid(dataMatrix * weights)
         error = (labelMat - h)
         weights = weights + alpha * dataMatrix.transpose() * error
-
     return weights
 
 def init():
@@ -33,6 +32,7 @@ def init():
         labelMat.append(0)
 
     weights = gradAscent(dataMat, labelMat)
+    print(weights)
     print(sigmoid(mat([1.0, 3, 3]) * weights))
 
 init()

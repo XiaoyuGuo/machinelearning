@@ -3,8 +3,8 @@ import time
 import matplotlib.pyplot as plt
 import random
 
-#初始化并返回k个随机点
 def initCentroids(dataSet, k):
+    '''随机选取数据集中的k个点'''
     numSamples, dim = dataSet.shape
     centroids = zeros((k, dim))
     
@@ -14,8 +14,8 @@ def initCentroids(dataSet, k):
     
     return centroids
 
-#计算两个向量之间的距离
 def euclDistance(vector1, vector2):
+    '''返回两个特征向量之间的欧几里得距离'''
     return sqrt(sum(power(vector2 - vector1, 2)))
     
 def kmeans(dataSet, k):
@@ -25,11 +25,10 @@ def kmeans(dataSet, k):
     #初始化了两个点
     centroids = initCentroids(dataSet, k)
     
-    #当聚类质心点改变的时候
+    #当聚类中心改变的时候
     while clusterChanged:
         clusterChanged = False
         
-        #range不生成数组，适应极大量的数据，更快一些
         for i in range(numSamples):
             minDist = 100000
             minIndex = 0
@@ -41,20 +40,20 @@ def kmeans(dataSet, k):
                     minDist = distance
                     minIndex = j
             
-            #如果在评估矩阵中该点所对应的质心不等于新的质心
-            #则将该点对应的质心索引（如：A或B）和其最短距离的平方记录到评估矩阵
+            #如果在评估矩阵中该点所对应的中心不等于新的中心
+            #则将该点对应的中心索引和其最短距离的平方记录到评估矩阵
             if clusterAssment[i, 0] != minIndex:
                 clusterChanged = True
                 clusterAssment[i, :] = minIndex, minDist ** 2
         
-        #对于每一个质心
+        #对于每一个聚类中心
         for j in range(k):
             #返回评估矩阵中的非零且和质心有关的元素
             pointsInCluster = dataSet[nonzero(clusterAssment[:,0].A == j)[0]]
-            #求新的质心
+            #求新的聚类中心
             centroids[j, :] = mean(pointsInCluster, axis = 0)
     
-    #当质心不在改变，则说明函数收敛
+    #当中心不再改变，则说明函数收敛
     return centroids, clusterAssment
     
 def showCluster(dataSet, k, centroids, clusterAssment):
